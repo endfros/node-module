@@ -99,8 +99,8 @@ function interview(callback,object){
     setTimeout(() => {
         // The callback is going to be executed, we use the parameters we
         // saw previously
-        callback(null,object.name + " has been interviewed");
         object.isInterviewed = true;
+        callback(null,object.name + " has been interviewed");
         // callback("They stole meeee D:",null);
     }, 2000);
 }
@@ -110,8 +110,8 @@ function sendOffer(callback,object){
     setTimeout(() => {
         // The callback is going to be executed, we use the parameters we
         // saw previously
-        callback(null,object.name + " has recieved an offer");
         object.hasOffer = true;
+        callback(null,object.name + " has recieved an offer");
         // callback("They stole meeee D:",null);
     }, 2000);
 }
@@ -121,8 +121,8 @@ function register(callback,object){
     setTimeout(() => {
         // The callback is going to be executed, we use the parameters we
         // saw previously
-        callback(null,object.name + " has been registered");
         object.isRegistered = true;
+        callback(null,object.name + " has been registered");
         // callback("They stole meeee D:",null);
     }, 2000);
 }
@@ -132,8 +132,8 @@ function classes(callback,object){
     setTimeout(() => {
         // The callback is going to be executed, we use the parameters we
         // saw previously
-        callback(null,object.name + " has taken the prebootcamp");
         object.canTakeClass = true;
+        callback(null,object.name + " has taken the prebootcamp");
         // callback("They stole meeee D:",null);
     }, 5000);
 }
