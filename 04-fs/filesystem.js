@@ -60,7 +60,7 @@ function deleteKoder(path,id){
                 if(element.id === id){
                     const index = koderJSON["koders"].indexOf(element)
                     koderJSON["koders"].splice(index, 1)
-                    // console.log(element.id)
+
                 }
             }) 
             fs.writeFile(path,JSON.stringify(koderJSON),(error) => {
