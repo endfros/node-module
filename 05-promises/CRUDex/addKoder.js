@@ -17,35 +17,16 @@ Realizar las siguientes acciones:
 
 const fs = require('fs');
 
-function readKoder(path,id,name,lastName,age){
-    return new Promise((resolve,reject) =>{
-        fs.readFile(path,(error,data) => {
-            if (error){
-                reject(error);
-            }
-            var koderJSON = JSON.parse(data);
-            koderJSON["koders"].push({"id":id, "name":name, "last_name":lastName, "age":age});
-            resolve([koderJSON,path])
-        })
-    })
+async function AddKoder(path,id,name,lastName,age){
+    const dataFile = await fs.promises.readFile(path,'utf8');
+    const koderJSON = JSON.parse(dataFile);
+    koderJSON["koders"].push({"id":id, "name":name, "last_name":lastName, "age":age});
+    await fs.promises.writeFile(path,JSON.stringify(koderJSON,null,2))
+    console.log('Koder added successfully!!')
 }
 
-function addKoder(stringJSON,path){
-    return new Promise((resolve,reject) => {
-        fs.writeFile(path,JSON.stringify(stringJSON),(error) => {
-            if (error){
-                reject(error);
-            }
-            console.log('se creo el archivo del koder');
-        })
-    })
-}
-
-
-readKoder('/Users/rodrigo/proyects/backendModule/05-promises/CRUDex/koders.json',5,"Rodri","Montoya",22)
-    .then(([koderJSON,path]) => {
-        console.log(koderJSON)
-        console.log(path)
-        addKoder(koderJSON,path)
+AddKoder('/Users/rodrigo/proyects/backendModule/05-promises/CRUDex/koders.json',5,"Rodri","Montoya",22)
+    .catch((error) => {
+        console.log('error', error);
     })
 

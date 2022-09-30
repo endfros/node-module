@@ -17,41 +17,22 @@ Realizar las siguientes acciones:
 
 const fs = require('fs');
 
-function readKoder(path,id,name,lastName,age){
-    return new Promise((resolve,reject) =>{
-        fs.readFile(path,(error,data) => {
-            if (error){
-                reject(error);
-            }
-            var koderJSON = JSON.parse(data);
-            koderJSON["koders"].forEach(element => {
-                if(element.id === id){
-                    element.name = name;
-                    element.lastName = lastName;
-                    element.age = age;
-                }
-            }) 
-            resolve([koderJSON,path])
-        })
-    })
+async function editKoder(path,id,name,lastName,age){
+    const dataFile = await fs.promises.readFile(path, 'utf8');
+    const koderJSON = JSON.parse(dataFile)
+    koderJSON["koders"].forEach(element => {
+        if(element.id === id){
+            element.name = name;
+            element.lastName = lastName;
+            element.age = age;
+        }
+    }) 
+    await fs.promises.writeFile(path,JSON.stringify(koderJSON,null,2))
+    console.log('The koder hass been edited successfully!!!')
 }
 
-function editKoder(stringJSON,path){
-    return new Promise((resolve,reject) => {
-        fs.writeFile(path,JSON.stringify(stringJSON),(error) => {
-            if (error){
-                reject(error);
-            }
-            console.log('se edito el koder');
-        })
-    })
-}
-
-
-readKoder('/Users/rodrigo/proyects/backendModule/05-promises/CRUDex/koders.json',3,"Sina","Salas",28)
-    .then(([koderJSON,path]) => {
-        console.log(koderJSON)
-        console.log(path)
-        editKoder(koderJSON,path)
+editKoder('/Users/rodrigo/proyects/backendModule/05-promises/CRUDex/koders.json',3,"Sina","Salas",28)
+    .catch((error) => {
+        console.log('error', error);
     })
 

@@ -17,40 +17,22 @@ Realizar las siguientes acciones:
 
 const fs = require('fs');
 
-function readKoder(path,id,name,lastName,age){
-    return new Promise((resolve,reject) =>{
-        fs.readFile(path,(error,data) => {
-            if (error){
-                reject(error);
-            }
-            var koderJSON = JSON.parse(data);
-            koderJSON["koders"].forEach(element => {
-                if(element.id === id){
-                    const index = koderJSON["koders"].indexOf(element)
-                    koderJSON["koders"].splice(index, 1)
-                }
-            }) 
-            resolve([koderJSON,path])
-        })
-    })
+async function deleteKoder(path,id){
+    const dataFile = await fs.promises.readFile(path,'utf8');
+    const koderJSON = JSON.parse(dataFile);
+    koderJSON["koders"].forEach(element => {
+        if(element.id === id){
+            const index = koderJSON["koders"].indexOf(element)
+            koderJSON["koders"].splice(index, 1)
+        }
+    }) 
+    await fs.promises.writeFile(path,JSON.stringify(koderJSON,null,2))
+    console.log('Koder deleted successfully!!!')
 }
 
-function deleteKoder(stringJSON,path){
-    return new Promise((resolve,reject) => {
-        fs.writeFile(path,JSON.stringify(stringJSON),(error) => {
-            if (error){
-                reject(error);
-            }
-            console.log('se elimino el koder');
-        })
+deleteKoder('/Users/rodrigo/proyects/backendModule/05-promises/CRUDex/koders.json',5)
+    .catch((error) => {
+        console.log('error', error);
     })
-}
-
-
-readKoder('/Users/rodrigo/proyects/backendModule/05-promises/CRUDex/koders.json',5)
-    .then(([koderJSON,path]) => {
-        console.log(koderJSON)
-        console.log(path)
-        deleteKoder(koderJSON,path)
-    })
+    
 

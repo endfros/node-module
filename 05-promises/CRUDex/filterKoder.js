@@ -37,4 +37,7 @@ readKoder('/Users/rodrigo/proyects/backendModule/05-promises/CRUDex/koders.json'
         console.log(path)
         console.log('Filtered!')
     })
+    .catch((error) => {
+        console.log('error', error);
+    })
 
